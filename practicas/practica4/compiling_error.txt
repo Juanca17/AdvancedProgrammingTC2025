@@ -1,15 +1,4 @@
-/Users/juancarlossanchez/Github/AdvancedProgrammingTC2025/practicas/practica04/hash.c:11:14: warning: using the result of an assignment as a condition without parentheses [-Wparentheses]
-    while (c = *str++)
-           ~~^~~~~~~~
-/Users/juancarlossanchez/Github/AdvancedProgrammingTC2025/practicas/practica04/hash.c:11:14: note: place parentheses around the assignment to silence this warning
-    while (c = *str++)
-             ^
-           (         )
-/Users/juancarlossanchez/Github/AdvancedProgrammingTC2025/practicas/practica04/hash.c:11:14: note: use '==' to turn this assignment into an equality comparison
-    while (c = *str++)
-             ^
-             ==
-/Users/juancarlossanchez/Github/AdvancedProgrammingTC2025/practicas/practica04/hash.c:23:19: error: called object type 'HashInt *' (aka 'struct h *') is not a function or function pointer
-  int index = hash(key);
-              ~~~~^
-1 warning and 1 error generated.
+/Users/juancarlossanchez/Github/AdvancedProgrammingTC2025/practicas/practica04/hash.c:4:10: fatal error: 'hash.h' file not found
+#include "hash.h"
+         ^
+1 error generated.

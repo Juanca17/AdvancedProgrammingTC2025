@@ -30,10 +30,10 @@ static char * testHashInsert() {
   hashInit(&hash,sizeHash);
   hashInsert(&hash,"cuarenta",40);
   hashInsert(&hash,"cincuenta",50);
-  muAssert("error, first key cuarenta", strcmp(hash[0].elements[0].key,"cuarenta") == 0);
-  muAssert("error, second key cincuenta", strcmp(hash[0].elements[1].key,"cincuenta") == 0);
-  muAssert("error, first value 40", hash[0][0].value == 40);
-  muAssert("error, second value 50", hash[0][1].value == 50);
+  muAssert("error, first key cuarenta", strcmp(hash.data[0].elements[0].key,"cuarenta") == 0);
+  muAssert("error, second key cincuenta", strcmp(hash.data[0].elements[1].key,"cincuenta") == 0);
+  muAssert("error, first value 40", hash.data[0].elements[0].value == 40);
+  muAssert("error, second value 50", hash.data[0].elements[1].value == 50);
   return 0;
 }
 

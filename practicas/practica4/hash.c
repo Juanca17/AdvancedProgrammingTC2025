@@ -17,12 +17,12 @@ doHash(unsigned char *str, unsigned size)
 
 void hashInit(HashInt *hash, int size) {
   hash->size = size;
-  hash->data = (HashElement)calloc(size, sizeof(HashElement));
+  hash->data = (HashElement *)calloc(size, sizeof(HashElement));
 }
 
 void hashInsert(HashInt *hash, char *key, int value) {
   int index = doHash(key, hash->size);
-  if ( hazh->data[index.elements == NULL ) {
+  if ( hash->data[index].elements == NULL ) {
     hash->data[index].elements = (Element *)malloc(4*sizeof(Element));
     hash->data[index].count = 0;
   }
