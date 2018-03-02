@@ -5,14 +5,18 @@ typedef struct e {
 
 typedef struct d {
   Element *elements;
-  int count;
+  unsigned count;
+  unsigned length;
 } HashElement;
 
 typedef struct h {
   HashElement *data;
-  int size;
+  unsigned size;
   ///
 } HashInt;
 
-void hashInit(HashInt *, int);
+void hashInit(HashInt *, unsigned);
 void hashInsert(HashInt *, char *, int);
+static void hashDoInsert(HashInt *, char *, int);
+static void hashDoUpdate(HashInt *, char *, int);
+int * hashGet(HashInt *, char *);

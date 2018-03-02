@@ -2,9 +2,16 @@
 #include <stdio.h>
 #include <string.h>
 #include "hash.h"
+#define HASH_DEBUG "HASH_DEBUG"
+void printDebug(char *msg) {
+  char hashDebug = getenv(HASH_DEBUG);
+  if(hashDebug != NULL && strcmp(hashDebug,"y") == 0) {
+    printf("%s\n", msg);
+  }
+}
 
 unsigned long
-doHash(unsigned char *str, unsigned size)
+doHash(char *str, unsigned size)
 {
     unsigned long hash = 5381;
     int c;
@@ -15,18 +22,67 @@ doHash(unsigned char *str, unsigned size)
     return hash % size;
 }
 
-void hashInit(HashInt *hash, int size) {
+void hashInit(HashInt *hash, unsigned size) {
   hash->size = size;
   hash->data = (HashElement *)calloc(size, sizeof(HashElement));
 }
+static void hashDoInsert(HashInt *hash, char *key, int value) {
+  char errorMessage[255];
+  printDebug("Trying doHash");
+  unsigned index = doHash(key, hash->size);
+  HashElement *currentHashElement = &(hash->data[index]);
+  sprintf(errorMessage, "index %d",index);
+  printDebug(errorMessage);
+  if (currentHashElement->elements == NULL ) {
+    currentHashElement->elements = (Element *)malloc(2 * sizeof(Element));
+    currentHashElement->count = 0;
+    currentHashElement->length = 2;
+  }
+  if (currentHashElement->length == currentHashElement->count) {
+    currentHashElement->length *= 2;
+    currentHashElement->elements = (Element *)realloc(currentHashElement->elements,
+        currentHashElement->length * sizeof(Element));
+  }
+  currentHashElement->elements[currentHashElement->count].key = strdup(key);
+  currentHashElement->elements[currentHashElement->count].value = value;
+  currentHashElement->count += 1;
+}
+
+static void hashDoUpdate(HashInt *hash, char *key, int value) {
+  int pos = doHash(key, hash->size);
+  Element *currentElements = hash->data[pos].elements;
+  int currentElementsLength = hash->data[pos].count;
+
+  for (int i = 0; i < currentElementsLength; i++) {
+    if(strcmp(key, currentElements[i].key) == 0) {
+      currentElements[i].value = value;
+      break;
+    }
+  }
+}
 
 void hashInsert(HashInt *hash, char *key, int value) {
-  int index = doHash(key, hash->size);
-  if ( hash->data[index].elements == NULL ) {
-    hash->data[index].elements = (Element *)malloc(4*sizeof(Element));
-    hash->data[index].count = 0;
+  int *oldValue = hashGet(hash, key);
+  if (oldValue == NULL) {
+    hashDoInsert(hash, key, value);
   }
-  hash->data[index].elements[hash->data[index].count].key = strdup(key);
-  hash->data[index].elements[hash->data[index].count].value = value;
-  hash->data[index].count += 1;
+  else {
+    hashDoUpdate(hash, key, value);
+  }
+
+}
+
+int * hashGet(HashInt *hash, char *key) {
+  int pos = doHash(key, hash->size);
+  Element *currentElements = hash->data[pos].elements;
+  int currentElementsLength = hash->data[pos].count;
+  int *value = NULL;
+  for (int i = 0; i < currentElementsLength; i++) {
+    if(strcmp(key, currentElements[i].key) == 0) {
+      value = (int *)malloc(sizeof(int));
+      *value = currentElements[i].value;
+      break;
+    }
+  }
+  return value;
 }
