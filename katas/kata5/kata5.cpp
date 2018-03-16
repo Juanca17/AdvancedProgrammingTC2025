@@ -12,7 +12,7 @@ void cleanWord(string &word);
 
 int main() {
   string s = "'After beating the eggs, Dana read the next step:'''''' Add milk and eggs, then add flour and sugar.'";
-  char source[] = "kata4.txt";
+  char source[] = "kata5.txt";
   ofstream myfile;
   myfile.open (source);
   myfile << s;
