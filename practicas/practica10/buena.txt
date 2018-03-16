@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+int main(int argc, char const *argv[]) {
+  int character;
+  while (1) {
+    character = fgetc(stdin);
+    if(feof(stdin)) {
+      break;
+    }
+    fputc(character, stdout);
+    fprintf(stderr, "character = %c\n", character);
+  }
+  return 0;
+}
