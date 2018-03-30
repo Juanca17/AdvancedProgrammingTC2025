@@ -1,0 +1,11 @@
+DESCRIPTION
+ Manual page stdio(3) line 5 (press h for help or q to quit)
+SYNOPSIS
+       #include <stdio.h>
+
+       FILE *stdin;
+
+       FILE *stdout;
+       FILE *stderr;
+
+DESCRIPTION
